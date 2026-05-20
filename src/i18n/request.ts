@@ -3,13 +3,10 @@ import { notFound } from 'next/navigation';
 
 const locales = ['ko', 'en'];
 
-export default getRequestConfig(async (params) => {
-    // In next-intl v4, locale comes from params
-    const locale = typeof params.requestLocale === 'string'
-        ? params.requestLocale
-        : (await params.requestLocale) ?? 'ko';
-
-    if (!locales.includes(locale)) notFound();
+export default getRequestConfig(async ({ requestLocale }) => {
+    // next-intl v4: requestLocale is a Promise<string | undefined>
+    const requested = await requestLocale;
+    const locale = locales.includes(requested ?? '') ? requested! : 'ko';
 
     return {
         locale,
