@@ -1,7 +1,9 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY || "");
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Using 1.5 Flash as stable target
+// Guard: only initialize if API key is present
+const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY ?? '';
+const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
+const model = genAI ? genAI.getGenerativeModel({ model: "gemini-1.5-flash" }) : null;
 
 export interface AgentContext {
   masterSummary?: any;
@@ -55,12 +57,16 @@ export const AGENT_PROMPTS = {
 };
 
 export const callAgent = async (agentName: keyof typeof AGENT_PROMPTS, context: AgentContext) => {
+  if (!model) {
+    console.warn('Gemini API key not configured. Returning mock response.');
+    return { analysis: '(API 키 미설정)', questions: [], strategy: '', summary: '', mappingKey: '' };
+  }
+
   const prompt = AGENT_PROMPTS[agentName](context);
   const result = await model.generateContent(prompt);
   const text = result.response.text();
 
   try {
-    // Attempt to parse JSON from AI response
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     return jsonMatch ? JSON.parse(jsonMatch[0]) : { text };
   } catch (e) {
