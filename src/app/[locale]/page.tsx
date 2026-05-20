@@ -85,12 +85,18 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
         </Box>
 
         {!isAllCompleted && (
-          <Grid container spacing={4} sx={{ mb: 6 }}>
-            <Grid item xs={12} md={4}><UploadZone title={t('master_file')} description={t('master_desc')} icon={<FolderSpecialIcon />} color="#6366f1" fileName={files.master?.name} onFileSelect={(f) => handleFileSelect('master', f)} /></Grid>
-            <Grid item xs={12} md={4}><UploadZone title={t('analyze_file')} description={t('analyze_desc')} icon={<AnalyticsIcon />} color="#ec4899" fileName={files.analyze?.name} onFileSelect={(f) => handleFileSelect('analyze', f)} /></Grid>
-            <Grid item xs={12} md={4}><UploadZone title={t('related_file')} description={t('related_desc')} icon={<DescriptionIcon />} color="#10b981" fileName={files.related?.name} onFileSelect={(f) => handleFileSelect('related', f)} /></Grid>
-          </Grid>
+          <Box sx={{ 
+            display: 'grid', 
+            gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' }, 
+            gap: 4, 
+            mb: 6 
+          }}>
+            <UploadZone title={t('master_file')} description={t('master_desc')} icon={<FolderSpecialIcon />} color="#6366f1" fileName={files.master?.name} onFileSelect={(f) => handleFileSelect('master', f)} />
+            <UploadZone title={t('analyze_file')} description={t('analyze_desc')} icon={<AnalyticsIcon />} color="#ec4899" fileName={files.analyze?.name} onFileSelect={(f) => handleFileSelect('analyze', f)} />
+            <UploadZone title={t('related_file')} description={t('related_desc')} icon={<DescriptionIcon />} color="#10b981" fileName={files.related?.name} onFileSelect={(f) => handleFileSelect('related', f)} />
+          </Box>
         )}
+
 
         {activeAgent && activeAgent.status === 'waiting_feedback' && (
           <AgentFeedbackPanel agentName={agentT(activeAgent.id)} questions={activeAgent.feedbacks} onSubmit={(qId, answer) => submitFeedback(workflow.activeAgentId as any, qId, answer)} />
