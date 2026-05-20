@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
-import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import theme from '../../theme/theme';
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -14,16 +17,19 @@ export default async function RootLayout(props: {
   params: Promise<{ locale: string }>;
 }) {
   const params = await props.params;
-  const locale = params.locale;
+  const locale = params.locale ?? 'ko';
   const messages = await getMessages();
 
   return (
-    <html lang={locale || 'ko'}>
+    <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <ThemeRegistry>
-            {props.children}
-          </ThemeRegistry>
+          <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              {props.children}
+            </ThemeProvider>
+          </AppRouterCacheProvider>
         </NextIntlClientProvider>
       </body>
     </html>
