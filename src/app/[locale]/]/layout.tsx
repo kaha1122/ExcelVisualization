@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import "../globals.css"; // Corrected path to parent directory css
+import "./globals.css";
 
 export const metadata: Metadata = {
     title: "Excel AI Visualization - PronunFit",
