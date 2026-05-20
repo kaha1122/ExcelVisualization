@@ -26,8 +26,17 @@ import { parseExcelFile } from '@/utils/excelParser';
 import { AgentFeedbackPanel } from '@/components/AgentFeedbackPanel';
 import { generateExcelReport, generatePPTReport } from '@/utils/reportGenerator';
 
-const UploadZone = ({ title, description, icon, color, fileName, onFileSelect }) => {
-  const inputRef = useRef(null);
+interface UploadZoneProps {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  color: string;
+  fileName?: string;
+  onFileSelect: (file: File) => void;
+}
+
+const UploadZone = ({ title, description, icon, color, fileName, onFileSelect }: UploadZoneProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
   return (
     <Paper
       onClick={() => inputRef.current?.click()}
@@ -47,19 +56,22 @@ const UploadZone = ({ title, description, icon, color, fileName, onFileSelect })
   );
 };
 
-export default function Home() {
+export default function Home({ params }: { params: Promise<{ locale: string }> }) {
+  // Use React.use(params) if locale is needed in client component body
   const t = useTranslations('Index');
   const agentT = useTranslations('Agent');
   const { files, setFiles, workflow, startWorkflow, submitFeedback, agentResults } = useAgentWorkflow();
 
-  const handleFileSelect = async (type, file) => {
+  const handleFileSelect = async (type: 'master' | 'analyze' | 'related', file: File) => {
     try {
       const summary = await parseExcelFile(file);
       setFiles(prev => ({ ...prev, [type]: { name: file.name, type, file, summary } }));
     } catch (err) { console.error(err); alert("파일 파싱 중 오류가 발생했습니다."); }
   };
 
-  const activeAgent = workflow.activeAgentId ? workflow.agents[workflow.activeAgentId] : null;
+  const activeAgentKey = workflow.activeAgentId as keyof typeof workflow.agents | null;
+  const activeAgent = activeAgentKey ? workflow.agents[activeAgentKey] : null;
+
   const isAllCompleted = workflow.agents.outputDefinition.status === 'completed' && 
                          workflow.agents.visualAnalyzer.status === 'completed' &&
                          workflow.agents.masterAnalyzer.status === 'completed';
@@ -81,7 +93,7 @@ export default function Home() {
         )}
 
         {activeAgent && activeAgent.status === 'waiting_feedback' && (
-          <AgentFeedbackPanel agentName={agentT(activeAgent.id)} questions={activeAgent.feedbacks} onSubmit={(qId, answer) => submitFeedback(workflow.activeAgentId, qId, answer)} />
+          <AgentFeedbackPanel agentName={agentT(activeAgent.id)} questions={activeAgent.feedbacks} onSubmit={(qId, answer) => submitFeedback(workflow.activeAgentId as any, qId, answer)} />
         )}
 
         {workflow.activeAgentId && (
