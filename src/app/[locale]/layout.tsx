@@ -1,17 +1,20 @@
-'use client';
 import type { Metadata } from "next";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import "../globals.css";
 
-export default async function RootLayout({
-  children,
-  params: { locale }
-}: {
+export const metadata: Metadata = {
+  title: "Excel AI Visualization - PronunFit",
+  description: "AI-powered Excel analysis and visualization report generator",
+};
+
+export default async function RootLayout(props: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const params = await props.params;
+  const locale = params.locale;
   const messages = await getMessages();
 
   return (
@@ -19,7 +22,7 @@ export default async function RootLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <ThemeRegistry>
-            {children}
+            {props.children}
           </ThemeRegistry>
         </NextIntlClientProvider>
       </body>
