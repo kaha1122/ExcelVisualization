@@ -1,0 +1,20 @@
+{
+    "Index": {
+        "title": "Excel AI 시각화",
+        "description": "마스터 파일, 분석 데이터, 관련 문서를 분석하고 시각화 보고서를 생성합니다.",
+        "start_analysis": "분석 시작하기",
+        "master_file": "마스터 파일",
+        "master_desc": "데이터의 기준이 되는 마스터 엑셀 파일을 업로드하세요.",
+        "analyze_file": "분석할 파일",
+        "analyze_desc": "심층 분석 및 시각화가 필요한 핵심 데이터 파일입니다.",
+        "related_file": "관련 파일",
+        "related_desc": "분석에 참고할 추가 데이터나 히스토리 파일입니다.",
+        "select_file": "파일 선택"
+    },
+    "Agent": {
+        "output_definition": "출력 결과 정의",
+        "master_analyzer": "마스터 데이터 분석",
+        "visual_analyzer": "시각화 분석",
+        "related_analyzer": "관련 데이터 매핑"
+    }
+}

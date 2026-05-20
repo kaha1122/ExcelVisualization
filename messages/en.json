@@ -1,0 +1,20 @@
+{
+    "Index": {
+        "title": "Excel AI Visualization",
+        "description": "Analyze master files, data, and related documents to generate visualization reports.",
+        "start_analysis": "Start Analysis",
+        "master_file": "Master File",
+        "master_desc": "Upload the master Excel file that serves as your data baseline.",
+        "analyze_file": "File to Analyze",
+        "analyze_desc": "Main data file requiring in-depth analysis and visualization.",
+        "related_file": "Related Files",
+        "related_desc": "Additional data or history files for contextual analysis.",
+        "select_file": "Select File"
+    },
+    "Agent": {
+        "output_definition": "Output Definition",
+        "master_analyzer": "Master Analyzer",
+        "visual_analyzer": "Visual Analyzer",
+        "related_analyzer": "Related Analyzer"
+    }
+}
