@@ -28,9 +28,10 @@ export const AgentFeedbackPanel = ({ agentName, questions, onSubmit }: AgentFeed
         <Fade in={true}>
             <Box sx={{ mt: 4, mb: 4 }}>
                 <Paper elevation={0} sx={{ p: 4, background: 'rgba(99, 102, 241, 0.1)', border: '1px solid #6366f1' }}>
-                    <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+                    <Stack direction="row" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
                         <SmartToyIcon color="primary" />
-                        <Typography variant="h6" fontWeight={700}>
+                        <Typography variant="h6" sx={{ fontWeight: 700 }}>
+
                             {agentName}의 확인 요청
                         </Typography>
                         <Chip label="Response Required" size="small" color="primary" variant="outlined" />
