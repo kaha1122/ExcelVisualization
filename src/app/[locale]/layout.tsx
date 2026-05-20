@@ -5,8 +5,8 @@ import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
 import "../globals.css";
 
 export const metadata: Metadata = {
-  title: "Excel AI Visualization - PronunFit",
-  description: "AI-powered Excel analysis and visualization report generator",
+  title: "Excel AI Visualization",
+  description: "AI-powered multi-agent Excel analysis and visualization",
 };
 
 export default async function RootLayout(props: {
@@ -15,14 +15,11 @@ export default async function RootLayout(props: {
 }) {
   const { locale } = await props.params;
   const messages = await getMessages();
-
   return (
     <html lang={locale ?? 'ko'}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <ThemeRegistry>
-            {props.children}
-          </ThemeRegistry>
+          <ThemeRegistry>{props.children}</ThemeRegistry>
         </NextIntlClientProvider>
       </body>
     </html>
