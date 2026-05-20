@@ -5,7 +5,7 @@ import {
   LinearProgress, Divider, Stack
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import SendIcon from '@mui/icons-material/Send';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import { useTranslations } from 'next-intl';
@@ -74,7 +74,7 @@ function AgentPanel({
           <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#e8f5e9', lineHeight: 1.2 }}>{title}</Typography>
           <Typography variant="caption" sx={{ color: '#90caf9', opacity: 0.8 }}>{subtitle}</Typography>
         </Box>
-        {isDone && <CheckCircleOutlineIcon sx={{ color: GREEN_ACC, ml: 'auto' }} />}
+        {isDone && <CheckCircleIcon sx={{ color: GREEN_ACC, ml: 'auto' }} />}
         {(isRunning || isWaiting) && (
           <Chip label={isWaiting ? '답변 필요' : '분석 중'} size="small"
             color={isWaiting ? 'warning' : 'primary'} sx={{ ml: 'auto', fontWeight: 700 }} />
